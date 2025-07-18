@@ -1,0 +1,8 @@
+# Visual Studio geçici klasörleri ve dosyaları
+.vs/
+bin/
+obj/
+
+# Yalnızca .cs dosyalarını ekle
+!*.cs
+.env
