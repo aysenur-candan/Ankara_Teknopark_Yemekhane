@@ -17,7 +17,7 @@ class Program
 
     static async Task Main()
     {
-        Console.WriteLine("✅ Bot başlatılıyor...");
+        Console.WriteLine($"✅ Bot başlatılıyor... {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
 
         string envPath = null;
         string baseDir = AppContext.BaseDirectory;
@@ -64,8 +64,6 @@ class Program
         botClient.StartReceiving(
             new DefaultUpdateHandler(HandleUpdateAsync, HandleErrorAsync),
             cancellationToken: cts.Token);
-
-        Console.WriteLine("Bot çalışıyor. 1: Menüyü kanala gönder | Çıkış için başka tuş + Enter");
 
         //string menuText = await GetMenuText();
         //Console.WriteLine("\n📌 Çekilen Menü:\n" + menuText);
@@ -240,7 +238,7 @@ class Program
                 chatId: kanalKullaniciAdi,
                 text: menuText);
 
-            Console.WriteLine($"✅ Menü kanala başarıyla gönderildi.");
+            Console.WriteLine($"✅ Menü kanala başarıyla gönderildi. {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         }
         catch (Exception ex)
         {
