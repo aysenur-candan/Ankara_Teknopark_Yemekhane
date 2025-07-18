@@ -6,3 +6,4 @@ obj/
 # Yalnızca .cs dosyalarını ekle
 !*.cs
 .env
+.editorconfig
