@@ -15,7 +15,7 @@ class Program
 
     static async Task Main()
     {
-        Console.WriteLine($"✅ Bot başlatılıyor... {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+        Console.WriteLine($"Bot başlatılıyor... {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
 
         string envPath = null;
         string baseDir = AppContext.BaseDirectory;
@@ -90,30 +90,30 @@ class Program
 
     private static Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
-        Console.WriteLine("📌 Telegram Bot Hatası Yakalandı");
+        Console.WriteLine("Telegram Bot Hatası Yakalandı");
 
         if (exception is Telegram.Bot.Exceptions.ApiRequestException apiEx)
         {
-            Console.WriteLine($"❌ API Hatası: [{apiEx.ErrorCode}] {apiEx.Message}");
+            Console.WriteLine($"API Hatası: [{apiEx.ErrorCode}] {apiEx.Message}");
 
             if (!string.IsNullOrEmpty(apiEx.StackTrace))
-                Console.WriteLine($"🪐 StackTrace:\n{apiEx.StackTrace}");
+                Console.WriteLine($"StackTrace:\n{apiEx.StackTrace}");
 
             if (apiEx.InnerException != null)
             {
-                Console.WriteLine($"🔹 InnerException: {apiEx.InnerException.Message}");
+                Console.WriteLine($"InnerException: {apiEx.InnerException.Message}");
             }
         }
         else
         {
-            Console.WriteLine($"❌ Genel Hata: {exception.Message}");
+            Console.WriteLine($"Genel Hata: {exception.Message}");
 
             if (!string.IsNullOrEmpty(exception.StackTrace))
-                Console.WriteLine($"🪐 StackTrace:\n{exception.StackTrace}");
+                Console.WriteLine($"StackTrace:\n{exception.StackTrace}");
 
             if (exception.InnerException != null)
             {
-                Console.WriteLine($"🔹 InnerException: {exception.InnerException.Message}");
+                Console.WriteLine($"InnerException: {exception.InnerException.Message}");
             }
         }
 
@@ -218,7 +218,7 @@ class Program
 
         string menuText = await GetMenuText();
 
-        Console.WriteLine("\n📌 Çekilen Menü:\n" + menuText);
+        Console.WriteLine("\nÇekilen Menü:\n" + menuText);
 
         try
         {
@@ -226,11 +226,11 @@ class Program
                 chatId: kanalKullaniciAdi,
                 text: menuText);
 
-            Console.WriteLine($"✅ Menü kanala başarıyla gönderildi. {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            Console.WriteLine($"Menü kanala başarıyla gönderildi. {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"❌ Menü kanala gönderilemedi: {ex.Message}");
+            Console.WriteLine($"Menü kanala gönderilemedi: {ex.Message}");
         }
     }
 }
