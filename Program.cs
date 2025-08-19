@@ -12,7 +12,6 @@ class Program
     static string telegramToken = "";
     static string kanalKullaniciAdi = "";
     static TelegramBotClient botClient = null;
-
     static async Task Main()
     {
         Console.WriteLine($"Bot başlatılıyor... {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
@@ -39,8 +38,8 @@ class Program
         }
 
         DotNetEnv.Env.Load(envPath);
-
         telegramToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
+
         if (string.IsNullOrEmpty(telegramToken))
         {
             Console.WriteLine("Telegram bot token bulunamadı! Lütfen .env dosyasını kontrol et.");
@@ -48,6 +47,7 @@ class Program
         }
 
         kanalKullaniciAdi= Environment.GetEnvironmentVariable("TELEGRAM_CHANNEL_USER_NAME");
+
         if (string.IsNullOrEmpty(kanalKullaniciAdi))
         {
             Console.WriteLine("TELEGRAM_CHANNEL_USER_NAME bulunamadı! Lütfen .env dosyasını kontrol et.");
@@ -69,6 +69,7 @@ class Program
         timer = new System.Threading.Timer(async _ =>
         {
             var bugun = DateTime.Today.DayOfWeek;
+
             if (bugun == DayOfWeek.Saturday || bugun == DayOfWeek.Sunday)
             {
                 Console.WriteLine("Bugün hafta sonu, mesaj gönderilmeyecek.");
@@ -77,17 +78,15 @@ class Program
 
             Console.WriteLine("Saat 11:00 - Menü otomatik gönderiliyor...");
             await MenuCekVeKanalaGonder();
+
         }, null, ilkCalisma, TimeSpan.FromDays(1));
 
         Console.ReadLine();
-
     }
-
     private static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         return;
     }
-
     private static Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         Console.WriteLine("Telegram Bot Hatası Yakalandı");
@@ -116,11 +115,8 @@ class Program
                 Console.WriteLine($"InnerException: {exception.InnerException.Message}");
             }
         }
-
         return Task.CompletedTask;
     }
-
-
     static async Task<string> GetMenuText()
     {
         var url = "https://www.teknolezzetler.com/yemekhane/";
@@ -150,6 +146,7 @@ class Program
             var kategoriler = new[] { "ÇORBA", "ANA YEMEK", "YARDIMCI YEMEK", "TATLI", "SALATA VE MEZE" };
             string currentCategory = "";
             int kat_cnt = 0;
+
             foreach (var lineRaw in lines[1..])
             {
                 bool m_control = false;
@@ -162,17 +159,14 @@ class Program
                     else
                         sb.Append("🍽️ ");
 
-
                     kat_cnt++;
 
                     m_control=true;
                 }
-               
+
                 int i = 0;
                 foreach (var x in lineRaw)
                 {
-                 
-
                     if (x == 10148)
                     {
                         i++;
@@ -197,12 +191,9 @@ class Program
                         sb.Append(x);
                     } 
                 }             
-
                 sb.Append("\n");
             }
-
             Console.WriteLine(sb.ToString());
-
             return sb.ToString();
         }
         catch (Exception ex)
@@ -211,13 +202,10 @@ class Program
             return "Menü alınırken bir hata oluştu.";
         }
     }
-
     static async Task MenuCekVeKanalaGonder()
     {
         Console.WriteLine("Menü çekiliyor...");
-
         string menuText = await GetMenuText();
-
         Console.WriteLine("\nÇekilen Menü:\n" + menuText);
 
         try
