@@ -6,8 +6,6 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using DotNetEnv;
-
-
 class Program
 {
     static System.Threading.Timer timer;
@@ -22,7 +20,6 @@ class Program
         string envPath = null;
         string baseDir = AppContext.BaseDirectory;
 
-        // 📌 .env dosyasını bulunduğu dizinde arar, bulamazsa bir üst dizinde arar, yine bulamazsa bir üst dizine bakar
         for (int i = 0; i < 5; i++)
         {
             string pathToCheck = Path.Combine(baseDir, ".env");
@@ -37,7 +34,7 @@ class Program
 
         if (envPath == null)
         {
-            Console.WriteLine("❌ .env dosyası bulunamadı! Lütfen uygulamanın çalıştığı dizine veya bir üst dizine .env dosyasını yerleştiriniz.");
+            Console.WriteLine(".env dosyası bulunamadı! Lütfen uygulamanın çalıştığı dizine veya bir üst dizine .env dosyasını yerleştiriniz.");
             return;
         }
 
@@ -64,12 +61,8 @@ class Program
         botClient.StartReceiving(
             new DefaultUpdateHandler(HandleUpdateAsync, HandleErrorAsync),
             cancellationToken: cts.Token);
-
-        //string menuText = await GetMenuText();
-        //Console.WriteLine("\n📌 Çekilen Menü:\n" + menuText);
-       
         
-        TimeSpan hedefSaat = new TimeSpan(11, 0, 0); // 11:00
+        TimeSpan hedefSaat = new TimeSpan(11, 0, 0); 
         TimeSpan simdi = DateTime.Now.TimeOfDay;
         TimeSpan ilkCalisma = (simdi < hedefSaat) ? hedefSaat - simdi : hedefSaat.Add(new TimeSpan(24, 0, 0)) - simdi;
 
@@ -78,14 +71,13 @@ class Program
             var bugun = DateTime.Today.DayOfWeek;
             if (bugun == DayOfWeek.Saturday || bugun == DayOfWeek.Sunday)
             {
-                Console.WriteLine("📌 Bugün hafta sonu, mesaj gönderilmeyecek.");
+                Console.WriteLine("Bugün hafta sonu, mesaj gönderilmeyecek.");
                 return;
             }
 
-            Console.WriteLine("🕒 Saat 11:00 - Menü otomatik gönderiliyor...");
+            Console.WriteLine("Saat 11:00 - Menü otomatik gönderiliyor...");
             await MenuCekVeKanalaGonder();
         }, null, ilkCalisma, TimeSpan.FromDays(1));
-
 
         Console.ReadLine();
 
@@ -166,7 +158,6 @@ class Program
                     if (kat_cnt > 0)
                     {
                         sb.Append("\n🍽️ ");
-                        //Console.WriteLine(); 
                     }
                     else
                         sb.Append("🍽️ ");
@@ -199,17 +190,14 @@ class Program
                         else
                         {
                             sb.Append("\n- ");
-                        }
-                            //Console.Write((i == 1 ? (m_control ? "\n- " : "- ") : "\n- "));
+                        }  
                     }
                     else
                     {
                         sb.Append(x);
-                        //Console.Write(x);
                     } 
                 }             
 
-                //Console.WriteLine();
                 sb.Append("\n");
             }
 
